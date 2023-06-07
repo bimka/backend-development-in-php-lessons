@@ -2,8 +2,8 @@
 
 $router = [
     '' => [
-        'GET' => getInfo(),
-        'POST' => calculate($_REQUEST)
+        'GET' => ['Controller', 'getInfo'],
+        'POST' => ['Controller', 'calculate'],
     ]
 ];
 
@@ -19,6 +19,6 @@ if ($routeData === null) {
     ]);
 }
 
-// var_dump($_REQUEST);
+// var_dump($routeData);
 
-echo $routeData;
+echo [$routeData[0], $routeData[1]]($_REQUEST);

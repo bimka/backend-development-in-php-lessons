@@ -2,9 +2,9 @@
 
 abstract class Figure 
 {
-    private static string $description = "Рассчет площади и периметра для геометрических фигур. Доступные фигуры: Квадрат, Окружность, Треугольник";
+    private static string $description = 'Calculation of area and perimeter';
     abstract static protected function getPerimeter(array $sides);
-    abstract static protected function getSquare(array $sides);
+    abstract static protected function getArea(array $sides);
     static function getDescription(): string {
         return self::$description;
     }
@@ -13,19 +13,20 @@ abstract class Figure
 final class Square extends Figure 
 {
     private int $side;
-    private static string $descripton = "квадрат";
-    private static string $requiredParameters = "Длина стороны ('side': 5)";
+    private static string $descripton = 'square';
+    private static string $requiredParameters = "Side length('side': 5)";
+    private static string $parameter = 'side';
 
     function __construct(float $side) {
         $this->side = $side;        
     }
 
     static function getPerimeter($side): float {
-        return  4 * $side['side'];
+        return  4 * $side;
     }
 
-    static function getSquare($side): float {
-        return pow($side['side'], 2);
+    static function getArea($side): float {
+        return pow($side, 2);
     }
 
     static function getDescription(): string {
@@ -34,25 +35,30 @@ final class Square extends Figure
 
     static function getRequiredParameters(): string {
         return self::$requiredParameters;
+    }
+
+    static function getParameter(): string {
+        return self::$parameter;
     }
 }
 
 final class Circle extends Figure
 {
     private int $radius;
-    private static string $descripton = "круг";
-    private static string $requiredParameters = "Радиус круга ('radius': 5)";
+    private static string $descripton = 'circle';
+    private static string $requiredParameters = "Circle radius ('radius': 5)";
+    private static string $parameter = "radius";
 
     function __construct(float $radius) {
         $this->radius = $radius;
     }
 
     static function getPerimeter($radius): float {
-        return 2 * round(pi() * $radius['radius'], 2);
+        return 2 * round(pi() * $radius, 2);
     }
 
-    static function getSquare($radius): float {
-        return round(pi() * pow($radius['radius'], 2), 2);
+    static function getArea($radius): float {
+        return round(pi() * pow($radius, 2), 2);
     }
 
     static function getDescription(): string {
@@ -62,23 +68,28 @@ final class Circle extends Figure
     static function getRequiredParameters(): string {
         return self::$requiredParameters;
     }
+
+    static function getParameter(): string {
+        return self::$parameter;
+    }
 }
 
 final class Triangle extends Figure
 {
     private array $sides;
-    private static $descripton = "треугольник";
-    private static string $requiredParameters = "Длина сторон ('sides': [3, 4, 5])";
-    
+    private static $descripton = 'triangle';
+    private static string $requiredParameters = "Sides length ('sides': [3, 4, 5])";
+    private static string $parameter = "sides";
+
     function __construct(array $sides) {
         $this->sides = $sides;
     }
 
-    static function getPerimeter($sides) {
-        return array_sum(json_decode($sides['sides']));
+    static function getPerimeter($sides): float {
+        return array_sum($sides);
     }
 
-    static function getSquare($sides): float {
+    static function getArea($sides): float {
         $halfMeter = self::getPerimeter($sides) / 2;
 
         return sqrt($halfMeter * ($halfMeter - $sides[0]) * 
@@ -92,5 +103,9 @@ final class Triangle extends Figure
 
     static function getRequiredParameters(): string {
         return self::$requiredParameters;
+    }
+
+    static function getParameter(): string {
+        return self::$parameter;
     }
 }
