@@ -12,23 +12,13 @@ $arrOfStrs = [
     'Коней на переправе не меняют'
 ];
 
-function checkStrbyPrefix($pref, $str): bool {
-    
-    for ($i = 0; $i < strlen($pref); $i++) {
-        if ($str[$i] != $pref[$i]) {
-            return false;
-        } 
-    }
-
-    return true;
-}
 
 function findStrByPrefix($pref, $arrOfStrs): array {
     $arrOfStrsStartByPrefix = [];
 
     foreach ($arrOfStrs as $str) {
-        if (checkStrbyPrefix($pref, $str)) {
-            array_push($arrOfStrsStartByPrefix, $str);
+        if (str_starts_with($str, $pref)) {
+            $arrOfStrsStartByPrefix[] = $str;
         }      
     }
 
