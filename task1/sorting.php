@@ -24,23 +24,14 @@ $cities = [
 ];
 
 function sorting($cities): array {
-    for ($i = 0; $i < count($cities) - 1; $i++) {
-        for ($j = 0; $j < count($cities) - $i - 1; $j++) {
-            if ($cities[$j]["sort"] > $cities[$j + 1]["sort"]) {
-                $tmp = $cities[$j + 1];
-                $cities[$j + 1] = $cities[$j];
-                $cities[$j] = $tmp;
-            } elseif ($cities[$j]["sort"] == $cities[$j + 1]["sort"] &&
-                      strcmp($cities[$j]["name"], $cities[$j + 1]["name"])) {
-                $tmp = $cities[$j + 1];
-                $cities[$j + 1] = $cities[$j];
-                $cities[$j] = $tmp;
-            }
+    $tmp=array();
 
-            
-        }
-
+    foreach($cities as $city) {
+        $tmp['name'][]=$city['name'];
+        $tmp['sort'][]=$city['sort'];
     }
+
+    array_multisort($tmp['sort'], $cities);
 
     return $cities;
 }
